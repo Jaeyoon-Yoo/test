@@ -18,6 +18,7 @@
             document.getElementById("info").innerHTML = "디바이스 정보: " + deviceInfo + "<br>시간: " + currentTime;
         }
         function getDeviceInfo() {
+            var deviceInfo = navigator.userAgent; // 간단한 디바이스 정보 예시
             var currentTime = new Date().toLocaleString(); // 현재 시간
             document.getElementById("info").innerHTML = "디바이스 정보: " + deviceInfo + "<br>시간: " + currentTime;
             
