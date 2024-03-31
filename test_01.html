@@ -6,7 +6,9 @@
     <button onclick="displayDeviceInfo()">디바이스 정보와 시간 보기</button>
     <p id="info"></p>
     <button onclick="getDeviceInfo()">디바이스 정보 가져오기</button>
-    <p id="ipInfo">IP 정보: 대기 중...</p>
+
+   
+    <p id="ipAddress">IP 정보: 대기 중...</p>
     <p id="gpsInfo">GPS 정보: 대기 중...</p>
     <script>
         function displayDeviceInfo() {
@@ -17,14 +19,17 @@
         }
         function getDeviceInfo() {
             var currentTime = new Date().toLocaleString(); // 현재 시간
+            document.getElementById("info").innerHTML = "디바이스 정보: " + deviceInfo + "<br>시간: " + currentTime;
             
-            // 사용자의 IP 주소 가져오기
             fetch('https://api.ipify.org?format=json')
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('ipInfo').textContent = `IP 정보: ${data.ip}`;
+                    document.getElementById('ipAddress').textContent = `당신의 IP 주소는: ${data.ip}`;
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    console.error('IP 주소를 가져오는 중 에러 발생:', error);
+                    document.getElementById('ipAddress').textContent = 'IP 주소를 가져올 수 없습니다.';
+                });
 
             // 사용자의 GPS 위치 정보 가져오기
             if ("geolocation" in navigator) {
@@ -40,36 +45,3 @@
     </script>
 </body>
 
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>Device IP and GPS Info</title>
-</head>
-<body>
-    <button onclick="getDeviceInfo()">디바이스 정보 가져오기</button>
-    <p id="ipInfo">IP 정보: 대기 중...</p>
-    <p id="gpsInfo">GPS 정보: 대기 중...</p>
-
-    <script>
-        function getDeviceInfo() {
-            // 사용자의 IP 주소 가져오기
-            fetch('https://api.ipify.org?format=json')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('ipInfo').textContent = `IP 정보: ${data.ip}`;
-                })
-                .catch(error => console.log(error));
-
-            // 사용자의 GPS 위치 정보 가져오기
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    document.getElementById('gpsInfo').textContent = `GPS 정보: 위도 ${position.coords.latitude}, 경도 ${position.coords.longitude}`;
-                }, function(error) {
-                    document.getElementById('gpsInfo').textContent = `GPS 정보: 오류 - ${error.message}`;
-                });
-            } else {
-                document.getElementById('gpsInfo').textContent = 'GPS 정보: 지원되지 않음';
-            }
-        }
-    </script>
-</body>
