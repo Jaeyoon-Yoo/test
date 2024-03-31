@@ -1,0 +1,18 @@
+<html>
+<head>
+    <title>Device Info and Time Display</title>
+</head>
+<body>
+    <button onclick="displayDeviceInfo()">디바이스 정보와 시간 보기</button>
+    <p id="info"></p>
+
+    <script>
+        function displayDeviceInfo() {
+            var deviceInfo = navigator.userAgent; // 간단한 디바이스 정보 예시
+            var currentTime = new Date().toLocaleString(); // 현재 시간
+
+            document.getElementById("info").innerHTML = "디바이스 정보: " + deviceInfo + "<br>시간: " + currentTime;
+        }
+    </script>
+</body>
+</html>
